@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1752494023376,
+    "title": "Test",
+    "description": "Testing",
+    "image": null,
+    "createdAt": "2025-07-14T11:53:43.376Z"
+  },
+  {
+    "id": 1752494156298,
+    "title": "Testing Pic",
+    "description": "Testing if pictures work",
+    "image": "/uploads/1752494156287_microsoft-edge-3840x2160-10308.jpg",
+    "createdAt": "2025-07-14T11:55:56.298Z"
+  }
+]
