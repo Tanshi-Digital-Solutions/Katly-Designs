@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Modern Business Template",
-  description: "A modern, responsive business website template built with Next.js",
+  title: "Katly Designs",
+  description: "Professional African themed fashion design",
 };
 
 export default function RootLayout({ children }) {

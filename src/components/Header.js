@@ -21,7 +21,7 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Modern Business</span>
-            <div className="text-2xl font-bold text-green-500">GenericBiz</div>
+            <div className="text-2xl font-bold text-green-500">Katly Designs</div>
           </Link>
         </div>
 
@@ -60,7 +60,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Modern Business</span>
-              <div className="text-2xl font-bold text-green-500">GenericBiz</div>
+              <div className="text-2xl font-bold text-green-500">Katly Designs</div>
             </Link>
             <button
               type="button"

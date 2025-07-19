@@ -1,202 +1,328 @@
-// pages/about.js
 'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Users, Clock, ShieldCheck, Handshake, Rocket } from 'lucide-react';
+import { Heart, Award, Users, Sparkles, Clock, Target, Eye, Gem } from 'lucide-react';
 import Header from '../components/Header';
 
-export default function About() {
+const teamMembers = [
+  {
+    name: 'Katly Mwanza',
+    role: 'Founder & Creative Director',
+    image: '/team1.jpg',
+    description: 'With over 15 years of experience in fashion design, Katly brings her passion for African heritage to every creation.'
+  },
+  {
+    name: 'Grace Phiri',
+    role: 'Senior Designer',
+    image: '/team2.jpg',
+    description: 'Specializing in bridal wear, Grace ensures every bride feels like royalty on their special day.'
+  },
+  {
+    name: 'Joseph Banda',
+    role: 'Master Tailor',
+    image: '/team3.jpg',
+    description: 'A craftsman with meticulous attention to detail, Joseph brings designs to life with precision.'
+  },
+  {
+    name: 'Sarah Tembo',
+    role: 'Fashion Consultant',
+    image: '/team4.jpg',
+    description: 'Sarah helps clients discover their personal style and find the perfect pieces for any occasion.'
+  }
+];
+
+const milestones = [
+  { year: '2008', event: 'Katly Designs founded in Lusaka', icon: Sparkles },
+  { year: '2012', event: 'First international fashion show participation', icon: Award },
+  { year: '2015', event: 'Opened flagship studio in Lusaka', icon: Heart },
+  { year: '2018', event: 'Launched sustainable fashion initiative', icon: Gem },
+  { year: '2020', event: 'Digital transformation and online consultations', icon: Target },
+  { year: '2023', event: 'Celebrating 15 years of fashion excellence', icon: Clock }
+];
+
+const About = () => {
   return (
     <div className="bg-white">
       <Header />
-
-      {/* Hero Section - Updated */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gray-900/90">
-          <ul className="circles">
-            {[...Array(10)].map((_, i) => <li key={i} />)}
-          </ul>
+      
+      {/* Hero Section */}
+      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-green-900">
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative mx-auto max-w-7xl px-6 py-24 text-center"
+          transition={{ duration: 0.8 }}
+          className="relative text-center z-10"
         >
-          h1 className="text-4xl md:text-6xl font-bold text-yellow-500 mb-6"
-            Innovative Business Solutions
-          /h1
-          p className="text-xl text-gray-800 max-w-2xl mx-auto"
-            Forward-thinking services to empower your enterprise and drive success.
-          /p
+          <h1 className="text-6xl md:text-7xl font-bold text-white mb-4">
+            Our <span className="text-orange-400">Story</span>
+          </h1>
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto px-6">
+            Weaving tradition into contemporary fashion since 2008
+          </p>
         </motion.div>
       </section>
 
-      {/* Mission & Vision Section - Updated */}
-      <section className="py-24 bg-gray-50">
+      {/* Vision & Mission Section */}
+      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div 
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               className="space-y-8"
             >
-              <div className="mb-12">
-                Rocket className="w-12 h-12 text-green-500 mb-4" /
-                h2 className="text-3xl font-bold text-gray-900 mb-4"Our Mission/h2
-                p className="text-lg text-gray-600"
-                  To empower businesses through tailored technology solutions and strategic insights.
-                  Enhancing operational efficiency across diverse industries.
-                /p
-              </div>
-
-              <div className="bg-white p-6 rounded-xl shadow-sm">
-                <Globe className="w-12 h-12 text-purple-600 mb-4" />
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
-                <p className="text-gray-600">
-                  To become the most responsive business partner, combining cutting-edge technology 
-                  with human expertise to redefine business solutions
-                </p>
+              <h2 className="text-4xl font-bold text-gray-900">
+                Fashion That Tells <span className="text-purple-600">Your Story</span>
+              </h2>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                At Katly Designs, we believe that fashion is more than just clothing—it's an expression 
+                of identity, heritage, and dreams. Founded in the heart of Lusaka, our journey began with 
+                a simple vision: to create garments that celebrate African culture while embracing global 
+                fashion trends.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Every piece we create is a labor of love, meticulously crafted to reflect the unique 
+                personality and style of our clients. From stunning wedding gowns that make dreams come 
+                true to everyday wear that radiates confidence, we're here to make you look and feel 
+                extraordinary.
+              </p>
+              <div className="flex gap-4">
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-purple-100 p-4 rounded-full"
+                >
+                  <Heart className="w-8 h-8 text-purple-600" />
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-orange-100 p-4 rounded-full"
+                >
+                  <Sparkles className="w-8 h-8 text-orange-600" />
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-blue-100 p-4 rounded-full"
+                >
+                  <Award className="w-8 h-8 text-blue-600" />
+                </motion.div>
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="grid grid-cols-2 gap-4"
+              viewport={{ once: true }}
+              className="relative"
             >
-              <div className="h-64 bg-gray-100 rounded-xl" />
-              <div className="h-80 bg-green-500/10 rounded-xl mt-8" />
-              <div className="h-72 bg-gray-100 rounded-xl col-span-2" />
+              <div className="grid grid-cols-2 gap-4">
+                <img 
+                  src="/about1.jpg" 
+                  alt="Fashion Design Process" 
+                  className="rounded-2xl shadow-lg h-64 w-full object-cover"
+                />
+                <img 
+                  src="/about2.jpg" 
+                  alt="Fabric Selection" 
+                  className="rounded-2xl shadow-lg h-48 w-full object-cover mt-8"
+                />
+                <img 
+                  src="/about3.jpg" 
+                  alt="Final Creation" 
+                  className="rounded-2xl shadow-lg h-48 w-full object-cover"
+                />
+                <img 
+                  src="/about4.jpg" 
+                  alt="Happy Client" 
+                  className="rounded-2xl shadow-lg h-64 w-full object-cover -mt-8"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Core Values Section - Updated */}
-      <section className="py-24 bg-white">
+      {/* Values Section */}
+      <section className="py-24 bg-gradient-to-r from-purple-900 via-blue-900 to-green-900">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold text-center mb-16 text-gray-900"
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            Our Founding Principles
-          </motion.h2>
+            <h2 className="text-5xl font-bold text-white mb-4">
+              Our Core <span className="text-orange-400">Values</span>
+            </h2>
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+              The principles that guide every stitch, every design, and every interaction
+            </p>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: ShieldCheck,
-                title: "Reliability",
-                description: "Consistent service quality backed by ironclad guarantees"
+                icon: Eye,
+                title: 'Vision',
+                description: 'We see fashion as art that empowers and transforms lives'
               },
               {
-                icon: Clock,
-                title: "24/7 Availability",
-                description: "Round-the-clock support for urgent business needs"
-              },
-              {
-                icon: Handshake,
-                title: "Personalization",
-                description: "Tailored solutions for every client's unique requirements"
-              },
-              {
-                icon: Globe,
-                title: "Global Reach",
-                description: "Worldwide connections with local expertise"
+                icon: Heart,
+                title: 'Passion',
+                description: 'Every creation is infused with love and dedication to excellence'
               },
               {
                 icon: Users,
-                title: "Client First",
-                description: "Your satisfaction drives every decision we make"
+                title: 'Community',
+                description: 'Building relationships that go beyond client and designer'
               },
               {
-                icon: Rocket,
-                title: "Innovation",
-                description: "Pioneering digital solutions for modern businesses"
+                icon: Gem,
+                title: 'Quality',
+                description: 'Premium materials and meticulous craftsmanship in every piece'
               }
             ].map((value, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-gray-50 p-8 rounded-xl"
+                className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl text-center hover:bg-white/20 transition-all duration-300"
               >
-                <value.icon className="w-12 h-12 text-blue-600 mb-6" />
-                <h3 className="text-xl font-bold mb-4 text-gray-900">{value.title}</h3>
-                <p className="text-gray-600">{value.description}</p>
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
+                  <value.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-white">{value.title}</h3>
+                <p className="text-gray-200">{value.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Timeline Section - Updated */}
+      {/* Timeline Section */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.h2 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-3xl font-bold text-center mb-16 text-gray-900"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            Our Collective Journey
-          </motion.h2>
+            <h2 className="text-5xl font-bold text-gray-900 mb-4">
+              Our <span className="text-purple-600">Journey</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Milestones that have shaped our story
+            </p>
+          </motion.div>
 
           <div className="relative">
-            <div className="absolute left-1/2 w-1 bg-gray-200 h-full" />
-            {[
-              { year: "2020", title: "Team Foundation", text: "Core team gains experience at major business firms across industries" },
-              { year: "2022", title: "Vision Conception", text: "Identified gap in responsive, tech-driven business services" },
-              { year: "2023", title: "Platform Development", text: "Built proprietary service platform with 24/7 support features" },
-              { year: "2024", title: "Official Launch", text: "Established digital-first operations with global reach" },
-              { year: "2025", title: "Regional Expansion", text: "Secured partnerships with industry specialists and global service networks" }
-            ].map((milestone, index) => (
+            {/* Timeline line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-purple-600 to-orange-600" />
+            
+            {milestones.map((milestone, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className={`mb-16 flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center`}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className={`flex items-center mb-12 ${
+                  index % 2 === 0 ? 'justify-start' : 'justify-end'
+                }`}
               >
-                <div className="w-5/12 px-4">
-                  <div className="p-6 bg-white rounded-lg shadow-sm">
-                    <h3 className="text-xl font-bold text-green-600 mb-2">{milestone.year}</h3>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">{milestone.title}</h4>
-                    <p className="text-gray-600">{milestone.text}</p>
+                <div className={`w-5/12 ${
+                  index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'
+                }`}>
+                  <div className="bg-white p-6 rounded-2xl shadow-lg">
+                    <h3 className="text-2xl font-bold text-purple-600 mb-2">{milestone.year}</h3>
+                    <p className="text-gray-700">{milestone.event}</p>
                   </div>
                 </div>
-                <div className="w-2/12 flex justify-center">
-                  <div className="w-8 h-8 bg-green-600 rounded-full" />
+                
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-purple-600 to-orange-600 rounded-full flex items-center justify-center">
+                  <milestone.icon className="w-6 h-6 text-white" />
                 </div>
-                <div className="w-5/12" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section - Updated */}
-      <section className="bg-gray-900 py-16">
-        <motion.div 
-          initial={{ scale: 0.95 }}
-          whileInView={{ scale: 1 }}
-          className="max-w-4xl mx-auto text-center px-6"
-        >
-          <h3 className="text-2xl font-bold text-white mb-6">
-            Ready for Smarter Business Solutions?
-          </h3>
-          <p className="text-gray-300 mb-8">
-            Combine our team's decades of experience with cutting-edge digital convenience
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold mx-auto"
+      {/* Team Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            Start Planning Today
-          </motion.button>
-        </motion.div>
+            <h2 className="text-5xl font-bold text-gray-900 mb-4">
+              Meet Our <span className="text-orange-600">Team</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              The talented individuals who bring your fashion dreams to life
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {teamMembers.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="relative overflow-hidden rounded-2xl mb-6">
+                  <div className="aspect-w-3 aspect-h-4 bg-gradient-to-br from-purple-200 to-orange-200">
+                    <div className="w-full h-80 bg-gray-200 rounded-2xl" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-purple-600 font-medium mb-3">{member.role}</p>
+                <p className="text-gray-600">{member.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-purple-600 to-orange-600">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Ready to Create Something Beautiful?
+            </h2>
+            <p className="text-xl text-white/90 mb-8">
+              Let's work together to bring your fashion vision to life
+            </p>
+            <a
+              href="/contact"
+              className="inline-block px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition duration-300"
+            >
+              Start Your Journey
+            </a>
+          </motion.div>
+        </div>
       </section>
     </div>
-  );
+  )
 }
+
+export default About
