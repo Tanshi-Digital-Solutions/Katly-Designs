@@ -36,7 +36,7 @@ export async function POST(request) {
     const title = formData.get('title');
     const description = formData.get('description');
     const password = formData.get('password');
-    const image = formData.get('image');
+    const images = formData.getAll('images');
 
     // Simple password check
     if (password !== 'Admin@2025') {
@@ -45,27 +45,33 @@ export async function POST(request) {
 
     const posts = await fs.readJson(DATA_FILE);
 
-    // Handle image upload
-    let imageUrl = null;
-    if (image && image.size > 0) {
+    // Handle multiple image uploads
+    const imageUrls = [];
+    if (images && images.length > 0) {
       const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
       await fs.ensureDir(uploadsDir);
       
-      const filename = `${Date.now()}_${image.name}`;
-      const filepath = path.join(uploadsDir, filename);
-      
-      const buffer = await image.arrayBuffer();
-      await fs.writeFile(filepath, new Uint8Array(buffer));
-      
-      imageUrl = `/uploads/${filename}`;
+      for (const image of images) {
+        if (image && image.size > 0) {
+          const filename = `${Date.now()}_${Math.random().toString(36).substring(7)}_${image.name}`;
+          const filepath = path.join(uploadsDir, filename);
+          
+          const buffer = await image.arrayBuffer();
+          await fs.writeFile(filepath, new Uint8Array(buffer));
+          
+          imageUrls.push(`/uploads/${filename}`);
+        }
+      }
     }
 
     const newPost = {
       id: Date.now(),
       title,
       description,
-      image: imageUrl,
+      images: imageUrls,
       createdAt: new Date().toISOString(),
+      author: 'Katly Designs Team',
+      readTime: Math.ceil(description.split(' ').length / 200) + ' min read'
     };
 
     posts.push(newPost);

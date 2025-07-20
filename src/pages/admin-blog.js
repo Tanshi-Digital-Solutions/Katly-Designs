@@ -26,12 +26,13 @@ export default function AdminBlog() {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUploaded, setImageUploaded] = useState(false);
+  const [previewImages, setPreviewImages] = useState([]);
 
   useEffect(() => {
     fetchPosts();
@@ -55,6 +56,24 @@ const response = await axios.get("/api/posts");
     }
   };
 
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
+    
+    // Create preview URLs
+    const previews = files.map(file => URL.createObjectURL(file));
+    setPreviewImages(previews);
+    setImageUploaded(files.length > 0);
+  };
+
+  const removeImage = (index) => {
+    const newImages = images.filter((_, i) => i !== index);
+    const newPreviews = previewImages.filter((_, i) => i !== index);
+    setImages(newImages);
+    setPreviewImages(newPreviews);
+    setImageUploaded(newImages.length > 0);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -63,14 +82,19 @@ const response = await axios.get("/api/posts");
     formData.append("title", title);
     formData.append("description", description);
     formData.append("password", password);
-    if (image) formData.append("image", image);
+    
+    // Append all images
+    images.forEach(image => {
+      formData.append("images", image);
+    });
 
     try {
       await axios.post("/api/posts", formData);
       await fetchPosts();
       setTitle("");
       setDescription("");
-      setImage(null);
+      setImages([]);
+      setPreviewImages([]);
       setImageUploaded(false);
       setIsLoading(false);
       setIsPasswordValid(false);

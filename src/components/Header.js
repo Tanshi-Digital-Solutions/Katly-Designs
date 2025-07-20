@@ -21,7 +21,7 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Modern Business</span>
-            <div className="text-2xl font-bold text-green-500">Katly Designs</div>
+            <img src="/logo2.png" alt="Katly Designs Logo" className="h-12 w-auto" />
           </Link>
         </div>
 
@@ -40,14 +40,14 @@ export default function Header() {
         {/* Desktop Menu */}
         <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
-            <Link key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-700 hover:text-blue-600 transition duration-300">
+            <Link key={item.name} href={item.href} className="text-sm font-medium text-orange-300 hover:text-orange-400 transition duration-300">
               {item.name}
             </Link>
           ))}
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link href="/contact" className="text-sm font-semibold leading-6 text-gray-700 hover:text-blue-600 transition duration-300">
+          <Link href="/contact" className="text-sm font-medium text-orange-300 hover:text-orange-400 transition duration-300">
             Contact Us <span aria-hidden="true">&rarr;</span>
           </Link>
         </div>
@@ -60,7 +60,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Modern Business</span>
-              <div className="text-2xl font-bold text-green-500">Katly Designs</div>
+              <img src="/logo2.png" alt="Katly Designs Logo" className="h-8 w-auto" />
             </Link>
             <button
               type="button"

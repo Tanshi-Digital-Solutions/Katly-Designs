@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Scissors, Palette, Crown, Heart, Star, Phone, MapPin, Calendar, CheckCircle, Sparkles, Camera, Users, Award, ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 const services = [ 
   'African-Inspired Designs',
@@ -52,9 +52,9 @@ const cards = [
 
 // Featured gallery images for homepage
 const featuredImages = [
-  { src: '/pic1.jpg', category: 'Wedding Collection', title: 'Elegant Bridal Gown' },
+  { src: '/cover2.jpg', category: 'Wedding Collection', title: 'Elegant Bridal Gown' },
   { src: '/pic2.jpg', category: 'African Heritage', title: 'Traditional Inspired' },
-  { src: '/pic3.jpg', category: 'Contemporary', title: 'Modern Chic' },
+  { src: '/pic5.jpg', category: 'Contemporary', title: 'Modern Chic' },
   { src: '/shirt1.jpg', category: 'Custom Tailoring', title: 'Bespoke Creation' },
 ];
 
@@ -81,186 +81,420 @@ export default function App() {
       <Header/>
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden glass-effect" id="hero">
-        {/* Animated gradient background */}
+      <section className="relative min-h-screen flex items-center overflow-hidden" id="hero">
+      {/* Enhanced Background with Diamond Pattern (from Hero Section 2) */}
+      <div className="absolute inset-0">
+        {/* Primary gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-green-900">
-          <div className="absolute inset-0 bg-black/30" />
-          
-          {/* Floating fashion elements animation */}
-          <div className="absolute inset-0">
-            <motion.div
-              className="absolute top-20 left-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"
-              animate={{
-                x: [0, 100, 0],
-                y: [0, -50, 0],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-            <motion.div
-              className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
-              animate={{
-                x: [0, -100, 0],
-                y: [0, 50, 0],
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-            <motion.div
-              className="absolute top-1/2 left-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"
-              animate={{
-                scale: [1, 1.5, 1],
-              }}
-              transition={{
-                duration: 30,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-          </div>
-
-          {/* Sparkle effect */}
-          <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  opacity: [0, 1, 0],
-                  scale: [0, 1.5, 0],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                }}
-              />
-            ))}
-          </div>
+          <div className="absolute inset-0 bg-black/40" />
         </div>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative mx-auto max-w-7xl px-6 py-32 sm:py-48 lg:px-8 lg:py-56"
-        >
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Text Content */}
-            <div className="text-left space-y-8">
-              <motion.h1 
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.2 }}
-                className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
-              >
-                Katly <span className="text-orange-400">Designs</span>
-              </motion.h1>
-              
-              <motion.p 
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.4 }}
-                className="text-xl md:text-2xl text-gray-100 max-w-2xl mb-8 leading-relaxed"
-              >
-                Where tradition meets haute couture. Experience the elegance of African-inspired fashion crafted with love, precision, and cultural pride.
-              </motion.p>
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4"
-              >
-                <a href="#gallery" 
-                   className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transform hover:scale-105 transition duration-300 text-center">
-                  View Our Creations
-                </a>
-                <a href="#contact" 
-                   className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-900 transform hover:scale-105 transition duration-300 text-center">
-                  Book Consultation
-                </a>
-              </motion.div>
-            </div>
 
-            {/* Hero Image with enhanced effects */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="relative flex justify-center lg:justify-end"
+        {/* SVG Diamond Pattern Overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="diamondPattern"
+              x="0"
+              y="0"
+              width="120"
+              height="120"
+              patternUnits="userSpaceOnUse"
             >
-              <div className="relative group">
-                {/* Animated glow effect */}
-                <motion.div 
-                  className="absolute -inset-8 bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-60"
-                  animate={{
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                />
-                
-                {/* Fashion frame decoration */}
-                <div className="absolute -inset-4 border-2 border-white/30 rounded-3xl glass-effect" />
-                
-                {/* Main image with parallax effect */}
-                <motion.img 
-                  src="/hero.png" 
-                  alt="Katly Designs Fashion Model" 
-                  className="relative w-[475px] h-[525px] object-contain rounded-3xl transform transition duration-700 hover:scale-105"
-                  style={{
-                    transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`,
-                  }}
-                />
-                
-                {/* Floating fashion icons */}
+              <path
+                d="M60 20 L80 60 L60 100 L40 60 Z"
+                fill="none"
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="1"
+              />
+              <path
+                d="M0 60 L20 100 L0 140 L-20 100 Z"
+                fill="none"
+                stroke="rgba(255,255,255,0.2)"
+                strokeWidth="0.5"
+              />
+              <path
+                d="M120 60 L140 100 L120 140 L100 100 Z"
+                fill="none"
+                stroke="rgba(255,255,255,0.2)"
+                strokeWidth="0.5"
+              />
+              <line
+                x1="0"
+                y1="0"
+                x2="120"
+                y2="120"
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="0.5"
+              />
+              <line
+                x1="120"
+                y1="0"
+                x2="0"
+                y2="120"
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="0.5"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="2"
+                fill="rgba(255,165,0,0.4)"
+              />
+              <circle
+                cx="30"
+                cy="30"
+                r="1.5"
+                fill="rgba(138,43,226,0.3)"
+              />
+              <circle
+                cx="90"
+                cy="90"
+                r="1.5"
+                fill="rgba(138,43,226,0.3)"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#diamondPattern)" />
+        </svg>
+
+        {/* Animated geometric shapes */}
+        <div className="absolute inset-0">
+          <motion.div
+            className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-full blur-3xl"
+            animate={{
+              x: [0, 100, -50, 0],
+              y: [0, -50, 50, 0],
+              scale: [1, 1.2, 0.8, 1],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-purple-500/20 to-pink-500/20 rounded-full blur-3xl"
+            animate={{
+              x: [0, -100, 80, 0],
+              y: [0, 50, -30, 0],
+              scale: [1, 0.8, 1.3, 1],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+          <motion.div
+            className="absolute top-1/3 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-500/15 to-cyan-500/15 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.5, 0.7, 1],
+              rotate: [0, 180, 360],
+            }}
+            transition={{
+              duration: 35,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+        </div>
+
+        {/* Fashion-themed floating elements */}
+        <div className="absolute inset-0">
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.3, 0.8, 0.3],
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 8 + Math.random() * 4,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: "easeInOut",
+              }}
+            >
+              <div className="w-2 h-2 bg-white/40 rotate-45" />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Sparkle constellation effect */}
+        <div className="absolute inset-0">
+          {[...Array(25)].map((_, i) => (
+            <motion.div
+              key={`sparkle-${i}`}
+              className="absolute w-1 h-1 bg-white rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 2, 0],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 3,
+                repeat: Infinity,
+                delay: Math.random() * 6,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Diagonal light rays */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute -top-32 -left-32 w-96 h-96"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="w-full h-full bg-gradient-conic from-transparent via-white/5 to-transparent rounded-full blur-xl" />
+          </motion.div>
+          <motion.div
+            className="absolute -bottom-32 -right-32 w-96 h-96"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="w-full h-full bg-gradient-conic from-transparent via-orange-500/10 to-transparent rounded-full blur-xl" />
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Main Content with Hero Section 1 layout approach */}
+      <div className="relative mx-auto max-w-7xl px-6 py-24 z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Text Content - Hero Section 1 style with Hero Section 2 content */}
+          <div className="text-left space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                Let's Create Together to Design{' '}
+                <span className="bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                  Wonders with Katly
+                </span>
+              </h1>
+            </motion.div>
+            
+            <motion.p 
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg text-gray-100 max-w-lg leading-relaxed"
+            >
+              Where tradition meets haute couture. Experience the elegance of African-inspired fashion crafted with 
+              <span className="text-orange-300 font-medium"> love, precision, and cultural pride.</span>
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative px-10 py-4 bg-gradient-to-r from-orange-500 via-orange-600 to-yellow-500 text-white rounded-2xl font-bold text-lg overflow-hidden transition-all duration-300"
+              >
+                <span className="relative z-10">View Our Creations</span>
                 <motion.div
-                  className="absolute -top-4 -right-4 bg-orange-500 p-3 rounded-full shadow-xl"
-                  animate={{
-                    y: [0, -10, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                >
-                  <Crown className="w-6 h-6 text-white" />
-                </motion.div>
-                
+                  className="absolute inset-0 bg-gradient-to-r from-orange-600 via-orange-700 to-yellow-600"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative px-10 py-4 bg-transparent border-2 border-white text-white rounded-2xl font-bold text-lg overflow-hidden backdrop-blur-sm transition-all duration-300"
+              >
+                <span className="relative z-10 group-hover:text-purple-900 transition-colors duration-300">Book Consultation</span>
                 <motion.div
-                  className="absolute -bottom-4 -left-4 bg-purple-500 p-3 rounded-full shadow-xl"
-                  animate={{
-                    y: [0, 10, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    delay: 1.5,
-                  }}
-                >
-                  <Sparkles className="w-6 h-6 text-white" />
-                </motion.div>
+                  className="absolute inset-0 bg-white"
+                  initial={{ y: '100%' }}
+                  whileHover={{ y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+            </motion.div>
+
+            {/* Statistics - from Hero Section 1 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="grid grid-cols-3 gap-8 pt-12"
+            >
+              <div>
+                <div className="text-3xl font-bold text-white">7+</div>
+                <div className="text-sm text-gray-300">years experience</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white">300+</div>
+                <div className="text-sm text-gray-300">projects success</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white">97%</div>
+                <div className="text-sm text-gray-300">satisfied rate</div>
               </div>
             </motion.div>
           </div>
-        </motion.div>
-      </section>
+ 
+          {/* Hero Image with Floating Badges - Hero Section 1 approach */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="relative flex justify-center lg:justify-end"
+          >
+            <div className="relative">
+              {/* Animated aurora background from Hero Section 2 */}
+              <motion.div 
+                className="absolute -inset-16 opacity-40"
+                animate={{
+                  background: [
+                    'radial-gradient(circle at 20% 50%, rgba(255,165,0,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(138,43,226,0.3) 0%, transparent 50%)',
+                    'radial-gradient(circle at 80% 50%, rgba(255,165,0,0.3) 0%, transparent 50%), radial-gradient(circle at 20% 50%, rgba(138,43,226,0.3) 0%, transparent 50%)',
+                    'radial-gradient(circle at 20% 50%, rgba(255,165,0,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(138,43,226,0.3) 0%, transparent 50%)'
+                  ],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+
+              {/* Main hero image */}
+              <div className="relative z-10">
+                <img 
+                  src="/hero.png" 
+                  alt="Katly Designs Fashion Model" 
+                  className="w-[400px] h-[500px] object-cover rounded-3xl shadow-2xl"
+                />
+              </div>
+
+              {/* Floating service badges - Hero Section 1 style with Hero Section 2 animations */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+                className="absolute top-16 -left-4 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex items-center gap-3 border border-white/20"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center">
+                  <Palette className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold text-white">African Heritage</div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 1.4 }}
+                className="absolute top-40 -right-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex items-center gap-3 border border-white/20"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center">
+                  <Scissors className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold text-white">Custom Tailoring</div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 1.6 }}
+                className="absolute bottom-20 -left-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex items-center gap-3 border border-white/20"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center">
+                  <Crown className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold text-white">Bridal Couture</div>
+                </div>
+              </motion.div>
+
+              {/* Decorative elements with enhanced animations */}
+              <motion.div
+                className="absolute -top-4 -right-4 w-8 h-8 bg-orange-400 rounded-full"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+
+              <motion.div
+                className="absolute bottom-8 right-4 w-6 h-6 bg-purple-400 rounded-full"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 1,
+                }}
+              />
+
+              {/* Additional floating icons from Hero Section 2 */}
+              <motion.div
+                className="absolute top-1/4 -left-12 bg-gradient-to-br from-pink-500 to-rose-500 p-3 rounded-full shadow-2xl"
+                animate={{
+                  x: [0, -10, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 1,
+                }}
+              >
+                <Star className="w-6 h-6 text-white" />
+              </motion.div>
+
+              <motion.div
+                className="absolute top-3/4 -right-12 bg-gradient-to-br from-cyan-500 to-blue-500 p-3 rounded-full shadow-2xl"
+                animate={{
+                  x: [0, 10, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 2.5,
+                }}
+              >
+                <Heart className="w-6 h-6 text-white" />
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
 
       {/* About Us Section */}
       <section className="py-24 bg-gradient-to-b from-gray-50 to-white" id="about">
@@ -333,12 +567,12 @@ export default function App() {
             >
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-4">
-                  <img src="/pic1.jpg" alt="Fashion Design 1" className="w-full h-48 object-cover rounded-lg shadow-md" />
-                  <img src="/pic3.jpg" alt="Fashion Design 3" className="w-full h-32 object-cover rounded-lg shadow-md" />
+                  <img src="/pic7.jpg" alt="Fashion Design 1" className="w-full h-60 object-cover rounded-lg shadow-md" />
+                  <img src="/pic3.jpg" alt="Fashion Design 3" className="w-full h-40 object-cover rounded-lg shadow-md" />
                 </div>
                 <div className="space-y-4 mt-8">
-                  <img src="/pic2.jpg" alt="Fashion Design 2" className="w-full h-32 object-cover rounded-lg shadow-md" />
-                  <img src="/pic4.jpg" alt="Fashion Design 4" className="w-full h-48 object-cover rounded-lg shadow-md" />
+                  <img src="/pic6wide.jpg" alt="Fashion Design 2" className="w-full h-40 object-cover rounded-lg shadow-md" />
+                  <img src="/ceopic2.jpg" alt="Fashion Design 4" className="w-full h-60 object-cover rounded-lg shadow-md" />
                 </div>
               </div>
             </motion.div>
@@ -347,7 +581,7 @@ export default function App() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 glass-effect" id="services">
+      <section className="py-24 bg-gradient-to-b from-gray-900 to-gray-800" id="services">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <motion.h2 
@@ -566,7 +800,138 @@ export default function App() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-24 bg-gradient-to-r from-purple-900 via-blue-900 to-green-900" id="contact">
+      <section className="relative py-24 overflow-hidden" id="contact">
+        {/* Background matching hero */}
+        <div className="absolute inset-0">
+          {/* Primary gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-green-900">
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+
+          {/* SVG Diamond Pattern Overlay */}
+          <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="contactDiamondPattern"
+                x="0"
+                y="0"
+                width="120"
+                height="120"
+                patternUnits="userSpaceOnUse"
+              >
+                {/* Diamond shapes */}
+                <path
+                  d="M60 20 L80 60 L60 100 L40 60 Z"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth="1"
+                />
+                <path
+                  d="M0 60 L20 100 L0 140 L-20 100 Z"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.2)"
+                  strokeWidth="0.5"
+                />
+                <path
+                  d="M120 60 L140 100 L120 140 L100 100 Z"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.2)"
+                  strokeWidth="0.5"
+                />
+                {/* Diagonal lines */}
+                <line
+                  x1="0"
+                  y1="0"
+                  x2="120"
+                  y2="120"
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="0.5"
+                />
+                <line
+                  x1="120"
+                  y1="0"
+                  x2="0"
+                  y2="120"
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="0.5"
+                />
+                {/* Small accent diamonds */}
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="2"
+                  fill="rgba(255,165,0,0.4)"
+                />
+                <circle
+                  cx="30"
+                  cy="30"
+                  r="1.5"
+                  fill="rgba(138,43,226,0.3)"
+                />
+                <circle
+                  cx="90"
+                  cy="90"
+                  r="1.5"
+                  fill="rgba(138,43,226,0.3)"
+                />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#contactDiamondPattern)" />
+          </svg>
+
+          {/* Animated geometric shapes */}
+          <div className="absolute inset-0">
+            <motion.div
+              className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-full blur-3xl"
+              animate={{
+                x: [0, 100, -50, 0],
+                y: [0, -50, 50, 0],
+                scale: [1, 1.2, 0.8, 1],
+              }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+            />
+            <motion.div
+              className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-purple-500/20 to-pink-500/20 rounded-full blur-3xl"
+              animate={{
+                x: [0, -100, 80, 0],
+                y: [0, 50, -30, 0],
+                scale: [1, 0.8, 1.3, 1],
+              }}
+              transition={{
+                duration: 30,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+            />
+          </div>
+
+          {/* Sparkle constellation effect */}
+          <div className="absolute inset-0">
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={`contact-sparkle-${i}`}
+                className="absolute w-1 h-1 bg-white rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 2, 0],
+                }}
+                transition={{
+                  duration: 3 + Math.random() * 3,
+                  repeat: Infinity,
+                  delay: Math.random() * 6,
+                }}
+              />
+            ))}
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <motion.h2 
@@ -590,7 +955,7 @@ export default function App() {
               { 
                 icon: Phone, 
                 title: 'Call Us', 
-                lines: ['+260 XXX XXX XXX', 'Available Mon-Sat'] 
+                lines: ['+260 972 439 233', 'Available Mon-Sat'] 
               },
               { 
                 icon: MapPin, 
