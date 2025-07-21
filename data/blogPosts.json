@@ -12,5 +12,30 @@
     "description": "Testing if pictures work",
     "image": "/uploads/1752494156287_microsoft-edge-3840x2160-10308.jpg",
     "createdAt": "2025-07-14T11:55:56.298Z"
+  },
+  {
+    "id": 1753095107267,
+    "title": "Wear your faith ",
+    "description": "Introducing our new line called wear your faith. order now",
+    "images": [
+      "/uploads/1753095107250_t2nvno_shirt2.jpg",
+      "/uploads/1753095107258_z3xwm6_shirt3.jpg",
+      "/uploads/1753095107263_74ert8_shirt4.jpg"
+    ],
+    "createdAt": "2025-07-21T10:51:47.268Z",
+    "author": "Katly Designs Team",
+    "readTime": "1 min read"
+  },
+  {
+    "id": 1753095447299,
+    "title": "Another test",
+    "description": "testing",
+    "images": [
+      "/uploads/1753095447291_mtz2wa_ceopic.jpg",
+      "/uploads/1753095447297_qwxoio_ceopic2.jpg"
+    ],
+    "createdAt": "2025-07-21T10:57:27.299Z",
+    "author": "Katly Designs Team",
+    "readTime": "1 min read"
   }
 ]

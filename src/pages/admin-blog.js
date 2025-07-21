@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import Header from '../components/Header';
-import { Plus, X, Upload, Loader } from 'lucide-react';
+import { Plus, X, Upload, Loader, ImageIcon } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -33,8 +35,10 @@ export default function AdminBlog() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUploaded, setImageUploaded] = useState(false);
   const [previewImages, setPreviewImages] = useState([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     fetchPosts();
   }, []);
 
@@ -179,23 +183,41 @@ const response = await axios.get("/api/posts");
                     <Upload className={`w-6 h-6 ${imageUploaded ? 'text-green-600' : 'text-gray-400'}`} />
                     {imageUploaded ? (
                       <div className="text-center">
-                        <span className="text-sm text-green-600 font-medium">✓ Image uploaded successfully!</span>
-                        {image && <p className="text-xs text-gray-500 mt-1">{image.name}</p>}
+                        <span className="text-sm text-green-600 font-medium">✓ {images.length} image{images.length > 1 ? 's' : ''} selected</span>
                       </div>
                     ) : (
-                      <span className="text-sm text-gray-500">Upload Image (Optional)</span>
+                      <span className="text-sm text-gray-500">Upload Images (Optional)</span>
                     )}
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        setImage(file);
-                        setImageUploaded(!!file);
-                      }}
+                      multiple
+                      onChange={handleImageChange}
                       className="hidden"
                     />
                   </label>
+                  
+                  {/* Preview Images */}
+                  {previewImages.length > 0 && (
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                      {previewImages.map((preview, idx) => (
+                        <div key={idx} className="relative group">
+                          <img 
+                            src={preview} 
+                            alt={`Preview ${idx + 1}`} 
+                            className="w-full h-24 object-cover rounded-lg" 
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeImage(idx)}
+                            className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <button
                   type="submit"
@@ -228,13 +250,27 @@ const response = await axios.get("/api/posts");
               transition={{ delay: index * 0.1 }}
               className="bg-white rounded-xl shadow-sm overflow-hidden"
             >
-              {post.image && (
-                <div className="relative aspect-video cursor-pointer" onClick={() => setSelectedImage(post.image)}>
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover"
-                  />
+              {/* Display images */}
+              {(post.images?.length > 0 || post.image) && (
+                <div className="grid grid-cols-2 gap-2 p-2">
+                  {(post.images || [post.image]).filter(img => img).map((image, idx) => (
+                    <div 
+                      key={idx} 
+                      className="relative aspect-video cursor-pointer hover:opacity-90 transition-opacity" 
+                      onClick={() => setSelectedImage(image)}
+                    >
+                      <img
+                        src={image}
+                        alt={`${post.title} - Image ${idx + 1}`}
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                      {post.images?.length > 1 && (
+                        <div className="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
+                          {idx + 1}/{post.images.length}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               )}
               <div className="p-6">

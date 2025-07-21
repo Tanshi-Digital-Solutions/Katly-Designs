@@ -1,18 +1,23 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import Header from '../components/Header';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, ChevronLeft, ChevronRight, Calendar, Clock, User, Heart, Share2, Sparkles } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Calendar, Clock, User, Heart, Share2, Sparkles, ZoomIn } from 'lucide-react';
 
 export default function PublicBlog() {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState(null);
+  const [modalImages, setModalImages] = useState([]);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
+  const [modalPostTitle, setModalPostTitle] = useState('');
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
+  const modalTouchStartX = useRef(null);
 
   useEffect(() => {
     fetchPosts();
@@ -57,10 +62,104 @@ export default function PublicBlog() {
     }));
   };
 
-  const openImageModal = (image) => {
-    setModalImage(image);
+  const openImageModal = (images, startIndex = 0, postTitle = '') => {
+    setModalImages(Array.isArray(images) ? images : [images]);
+    setModalImageIndex(startIndex);
+    setModalPostTitle(postTitle);
     setIsImageModalOpen(true);
   };
+
+  const nextModalImage = () => {
+    setModalImageIndex(prev => (prev + 1) % modalImages.length);
+  };
+
+  const prevModalImage = () => {
+    setModalImageIndex(prev => prev === 0 ? modalImages.length - 1 : prev - 1);
+  };
+
+  // Touch handlers for post image carousels
+  const handleTouchStart = (e, postId) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e) => {
+    // Prevent default scroll behavior when swiping horizontally
+    if (touchStartX.current !== null) {
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - touchStartX.current);
+      const diffY = Math.abs(currentY - touchStartY.current);
+      
+      // If horizontal swipe is more significant than vertical, prevent scroll
+      if (diffX > diffY && diffX > 10) {
+        e.preventDefault();
+      }
+    }
+  };
+
+  const handleTouchEnd = (e, postId, totalImages) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const diffX = touchStartX.current - touchEndX;
+    const diffY = touchStartY.current - touchEndY;
+
+    // Only trigger swipe if horizontal movement is greater than vertical
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+      if (diffX > 0) {
+        // Swipe left - next image
+        nextImage(postId, totalImages);
+      } else {
+        // Swipe right - previous image
+        prevImage(postId, totalImages);
+      }
+    }
+
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
+  // Touch handlers for modal
+  const handleModalTouchStart = (e) => {
+    modalTouchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleModalTouchEnd = (e) => {
+    if (modalTouchStartX.current === null) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = modalTouchStartX.current - touchEndX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        nextModalImage();
+      } else {
+        prevModalImage();
+      }
+    }
+
+    modalTouchStartX.current = null;
+  };
+
+  // Keyboard navigation for modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isImageModalOpen) {
+        if (e.key === 'ArrowLeft') {
+          prevModalImage();
+        } else if (e.key === 'ArrowRight') {
+          nextModalImage();
+        } else if (e.key === 'Escape') {
+          setIsImageModalOpen(false);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isImageModalOpen, modalImages.length]);
 
   return (
     <div className="bg-white text-gray-800 overflow-x-hidden">
@@ -200,7 +299,12 @@ export default function PublicBlog() {
                   >
                     {/* Image Slideshow Section */}
                     {images.length > 0 && (
-                      <div className="relative h-96 md:h-[500px] overflow-hidden group">
+                      <div 
+                        className="relative h-96 md:h-[500px] overflow-hidden group select-none"
+                        onTouchStart={(e) => handleTouchStart(e, post.id)}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={(e) => handleTouchEnd(e, post.id, images.length)}
+                      >
                         {/* Main Image */}
                         <motion.div
                           key={currentIndex}
@@ -214,9 +318,15 @@ export default function PublicBlog() {
                             src={images[currentIndex]}
                             alt={`${post.title} - Image ${currentIndex + 1}`}
                             className="w-full h-full object-cover cursor-pointer"
-                            onClick={() => openImageModal(images[currentIndex])}
+                            onClick={() => openImageModal(images, currentIndex, post.title)}
+                            draggable={false}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                          
+                          {/* Zoom icon overlay */}
+                          <div className="absolute top-4 left-4 p-2 bg-black/30 backdrop-blur-sm rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                            <ZoomIn className="w-5 h-5" />
+                          </div>
                         </motion.div>
 
                         {/* Navigation Arrows */}
@@ -224,13 +334,13 @@ export default function PublicBlog() {
                           <>
                             <button
                               onClick={() => prevImage(post.id, images.length)}
-                              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all opacity-0 group-hover:opacity-100"
+                              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all opacity-0 group-hover:opacity-100 z-10"
                             >
                               <ChevronLeft className="w-6 h-6" />
                             </button>
                             <button
                               onClick={() => nextImage(post.id, images.length)}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all opacity-0 group-hover:opacity-100"
+                              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-all opacity-0 group-hover:opacity-100 z-10"
                             >
                               <ChevronRight className="w-6 h-6" />
                             </button>
@@ -248,6 +358,11 @@ export default function PublicBlog() {
                                   }`}
                                 />
                               ))}
+                            </div>
+
+                            {/* Swipe hint for touch devices */}
+                            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 text-white/70 text-sm opacity-0 group-hover:opacity-100 transition-opacity md:hidden">
+                              Swipe to browse
                             </div>
                           </>
                         )}
@@ -331,31 +446,102 @@ export default function PublicBlog() {
         </div>
       </section>
 
-      {/* Image Preview Dialog */}
+      {/* Enhanced Full-Screen Image Gallery Modal */}
       <Dialog open={isImageModalOpen} onOpenChange={setIsImageModalOpen}>
-        <DialogContent className="max-w-5xl p-0 overflow-hidden bg-black/90">
+        <DialogContent className="max-w-full w-screen h-screen p-0 m-0 bg-black/95 border-0 rounded-none">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="relative"
+            className="relative w-full h-full flex items-center justify-center"
+            onTouchStart={handleModalTouchStart}
+            onTouchEnd={handleModalTouchEnd}
           >
-            {modalImage && (
-              <img
-                src={modalImage}
-                alt="Preview"
-                className="w-full h-full object-contain max-h-[90vh]"
-              />
-            )}
+            {/* Close Button */}
             <button
-              onClick={() => {
-                setIsImageModalOpen(false);
-                setModalImage(null);
-              }}
-              className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+              onClick={() => setIsImageModalOpen(false)}
+              className="absolute top-6 right-6 z-50 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors backdrop-blur-sm"
             >
               <X className="w-6 h-6" />
             </button>
+
+            {/* Image Counter */}
+            {modalImages.length > 1 && (
+              <div className="absolute top-6 left-6 z-50 px-4 py-2 bg-black/50 backdrop-blur-sm rounded-full text-white text-sm">
+                {modalImageIndex + 1} / {modalImages.length}
+              </div>
+            )}
+
+            {/* Post Title */}
+            {modalPostTitle && (
+              <div className="absolute bottom-6 left-6 right-6 z-50 text-center">
+                <h3 className="text-white text-lg font-semibold bg-black/50 backdrop-blur-sm rounded-lg px-4 py-2 inline-block">
+                  {modalPostTitle}
+                </h3>
+              </div>
+            )}
+
+            {/* Main Image */}
+            {modalImages[modalImageIndex] && (
+              <motion.img
+                key={modalImageIndex}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                src={modalImages[modalImageIndex]}
+                alt={`${modalPostTitle} - Image ${modalImageIndex + 1}`}
+                className="max-w-full max-h-full object-contain select-none"
+                draggable={false}
+              />
+            )}
+
+            {/* Navigation Arrows */}
+            {modalImages.length > 1 && (
+              <>
+                <button
+                  onClick={prevModalImage}
+                  className="absolute left-6 top-1/2 -translate-y-1/2 p-4 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all z-40"
+                >
+                  <ChevronLeft className="w-8 h-8" />
+                </button>
+                <button
+                  onClick={nextModalImage}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 p-4 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all z-40"
+                >
+                  <ChevronRight className="w-8 h-8" />
+                </button>
+              </>
+            )}
+
+            {/* Image Thumbnails */}
+            {modalImages.length > 1 && (
+              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 max-w-full overflow-x-auto px-6">
+                {modalImages.map((image, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setModalImageIndex(idx)}
+                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                      idx === modalImageIndex
+                        ? 'border-white'
+                        : 'border-transparent opacity-60 hover:opacity-80'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Swipe hint for mobile */}
+            {modalImages.length > 1 && (
+              <div className="absolute top-20 left-1/2 -translate-x-1/2 text-white/70 text-sm md:hidden">
+                Swipe or use arrow keys to navigate
+              </div>
+            )}
           </motion.div>
         </DialogContent>
       </Dialog>
